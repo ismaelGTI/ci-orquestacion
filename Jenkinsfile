@@ -12,9 +12,7 @@ spec:
       image: maven:3.9.6-eclipse-temurin-17
       imagePullPolicy: Always
       command:
-        - /bin/sh
-        - -c
-        - "echo 'Starting Maven Build' && mvn clean install && echo 'Build Finished'"
+        - cat
       tty: true
       volumeMounts:
         - name: m2-cache
@@ -82,8 +80,7 @@ spec:
                 echo "the base URL for the epheremeral test container is: $EPHTEST_BASE_URL"
                 container('jdk') {
                     sh 'java -version'
-                    sh 'mvn --version'
-                    sh 'mvn clean install -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true'
+                    sh './mvnw --version'
                 }
                 container('podman') {
                     sh 'podman --version'
