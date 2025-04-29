@@ -9,11 +9,14 @@ kind: Pod
 spec:
   containers:
     - name: jdk
-      image: maven:3.9.6-eclipse-temurin-17
+      image: docker.io/eclipse-temurin:20.0.1_9-jdk
       imagePullPolicy: Always
       command:
         - cat
       tty: true
+      securityContext:
+        runAsUser: 0
+        privileged: true
       volumeMounts:
         - name: m2-cache
           mountPath: /root/.m2
@@ -79,6 +82,7 @@ spec:
                 echo "the name for the epheremeral test container to be created is: $EPHTEST_CONTAINER_NAME"
                 echo "the base URL for the epheremeral test container is: $EPHTEST_BASE_URL"
                 container('jdk') {
+                    sh 'sleep 10' // Espera 10 segundos para asegurar que el contenedor esté listo
                     sh 'java -version'
                     sh './mvnw --version'
                 }
