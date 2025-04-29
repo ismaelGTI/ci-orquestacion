@@ -6,10 +6,15 @@ pipeline {
             yaml '''
 apiVersion: v1
 kind: Pod
+metadata:
+  labels:
+    jenkins: "slave"
+  annotations:
+    kubernetes.jenkins.io/pod-retention: "on-failure"  # Mantiene el Pod si el pipeline falla
 spec:
   containers:
     - name: jdk
-      image: docker.io/eclipse-temurin:20.0.1_9-jdk
+      image: maven:3.9.6-eclipse-temurin-17
       imagePullPolicy: Always
       command:
         - cat
@@ -82,8 +87,10 @@ spec:
                 echo "the name for the epheremeral test container to be created is: $EPHTEST_CONTAINER_NAME"
                 echo "the base URL for the epheremeral test container is: $EPHTEST_BASE_URL"
                 container('jdk') {
-                    sh 'sleep 10' // Espera 10 segundos para asegurar que el contenedor esté listo
+                    sh 'echo "Testing shell"'
+                    sh 'which java'  // Verifica si Java está disponible
                     sh 'java -version'
+                    sh 'which mvn'   // Verifica si Maven está disponible
                     sh './mvnw --version'
                 }
                 container('podman') {
