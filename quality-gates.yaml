@@ -1,0 +1,4 @@
+qualityGates:
+  codeCoverage: 80
+  maxVulnerabilities: 0
+  maxBugs: 0
