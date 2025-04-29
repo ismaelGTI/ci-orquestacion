@@ -34,6 +34,10 @@ spec:
       securityContext:
         runAsUser: 0
         privileged: true
+    - name: jnlp
+      image: jenkins/inbound-agent:latest
+      args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
+
   volumes:
     - name: m2-cache
       hostPath:
