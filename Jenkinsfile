@@ -17,6 +17,9 @@ spec:
       image: maven:3.9.6-eclipse-temurin-17
       imagePullPolicy: Always
       command:
+        - /bin/sh
+        - -c
+      args:
         - cat
       tty: true
       securityContext:
