@@ -78,18 +78,9 @@ spec:
                 echo "APP_NAME: ${APP_NAME}\nAPP_VERSION: ${APP_VERSION}"
                 echo "the name for the epheremeral test container to be created is: $EPHTEST_CONTAINER_NAME"
                 echo "the base URL for the epheremeral test container is: $EPHTEST_BASE_URL"
-                sh 'java -version'
-                sh 'mvn --version'
                 container('jdk') {
-                    sh '''
-                        echo "==> DEPURACIÓN DEL CONTENEDOR JDK <=="
-                        echo "Contenedor activo: $(hostname)"
-                        echo "PATH: $PATH"
-                        which mvn || echo "mvn no está disponible"
-                        mvn --version || echo "Falló mvn --version"
-                        echo "==> LISTA DE BINARIOS EN /usr/bin:"
-                        ls /usr/bin | grep mvn || echo "No está mvn en /usr/bin"
-                    '''
+                    sh 'java -version'
+                    sh 'mvn --version'
                 }
                 container('podman') {
                     sh 'podman --version'
