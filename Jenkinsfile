@@ -14,7 +14,7 @@ spec:
       command:
         - /bin/sh
         - -c
-        - cat
+        - "echo 'Hello World'"
       tty: true
       volumeMounts:
         - name: m2-cache
@@ -83,6 +83,7 @@ spec:
                 container('jdk') {
                     sh 'java -version'
                     sh 'mvn --version'
+                    sh 'mvn clean install -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true'
                 }
                 container('podman') {
                     sh 'podman --version'
