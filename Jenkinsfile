@@ -49,9 +49,7 @@ spec:
 
   volumes:
     - name: m2-cache
-      hostPath:
-        path: /data/m2-cache
-        type: DirectoryOrCreate
+      emptyDir: {}
     - name: workspace
       emptyDir: {}
 '''
@@ -87,10 +85,12 @@ spec:
                 echo "the name for the epheremeral test container to be created is: $EPHTEST_CONTAINER_NAME"
                 echo "the base URL for the epheremeral test container is: $EPHTEST_BASE_URL"
                 container('jdk') {
+                    sh 'ls -ld /root/.m2'  // Verifica si el volumen está montado correctamente
+                    sh 'df -h /root/.m2'   // Verifica el sistema de archivos montado
                     sh 'echo "Testing shell"'
-                    sh 'which java'  // Verifica si Java está disponible
+                    sh 'which java'
                     sh 'java -version'
-                    sh 'which mvn'   // Verifica si Maven está disponible
+                    sh 'which mvn'
                     sh './mvnw --version'
                 }
                 container('podman') {
