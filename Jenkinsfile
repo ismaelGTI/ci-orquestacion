@@ -9,7 +9,7 @@ kind: Pod
 spec:
   containers:
     - name: jdk
-      image: docker.io/eclipse-temurin:20.0.1_9-jdk
+      image: maven:3.9.6-eclipse-temurin-20
       command:
         - cat
       tty: true
