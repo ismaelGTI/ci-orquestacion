@@ -13,6 +13,10 @@ metadata:
     kubernetes.jenkins.io/pod-retention: "on-failure"  # Mantiene el Pod si el pipeline falla
 spec:
   containers:
+    - name: jenkins
+      env:
+        - name: JAVA_OPTS
+          value: "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
     - name: jdk
       image: maven:3.9.6-eclipse-temurin-17
       imagePullPolicy: Always
