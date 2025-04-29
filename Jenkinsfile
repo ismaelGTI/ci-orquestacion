@@ -9,13 +9,15 @@ kind: Pod
 spec:
   containers:
     - name: jdk
-      image: maven:3.9.6-eclipse-temurin-20
+      image: maven:3.9.6-jdk-20
       command:
         - cat
       tty: true
       volumeMounts:
         - name: m2-cache
           mountPath: /root/.m2
+        - name: workspace
+          mountPath: /home/jenkins/agent
     - name: podman
       image: quay.io/containers/podman:v4.5.1
       command:
