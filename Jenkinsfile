@@ -10,6 +10,7 @@ spec:
   containers:
     - name: jdk
       image: maven:3.9.6-eclipse-temurin-17
+      imagePullPolicy: Always
       command:
         - cat
       tty: true
@@ -79,6 +80,17 @@ spec:
                 echo "the base URL for the epheremeral test container is: $EPHTEST_BASE_URL"
                 sh 'java -version'
                 sh 'mvn --version'
+                container('jdk') {
+                    sh '''
+                        echo "==> DEPURACIÓN DEL CONTENEDOR JDK <=="
+                        echo "Contenedor activo: $(hostname)"
+                        echo "PATH: $PATH"
+                        which mvn || echo "mvn no está disponible"
+                        mvn --version || echo "Falló mvn --version"
+                        echo "==> LISTA DE BINARIOS EN /usr/bin:"
+                        ls /usr/bin | grep mvn || echo "No está mvn en /usr/bin"
+                    '''
+                }
                 container('podman') {
                     sh 'podman --version'
                     sh "podman login $CONTAINER_REGISTRY_URL -u $CONTAINER_REGISTRY_CRED_USR -p $CONTAINER_REGISTRY_CRED_PSW"
