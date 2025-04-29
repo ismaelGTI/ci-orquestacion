@@ -39,6 +39,8 @@ spec:
       hostPath:
         path: /data/m2-cache
         type: DirectoryOrCreate
+    - name: workspace
+      emptyDir: {}
 '''
         }
     }
