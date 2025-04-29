@@ -14,7 +14,7 @@ spec:
       command:
         - /bin/sh
         - -c
-        - "echo 'Hello World'"
+        - "echo 'Starting Maven Build' && mvn clean install && echo 'Build Finished'"
       tty: true
       volumeMounts:
         - name: m2-cache
