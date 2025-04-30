@@ -94,6 +94,29 @@ spec:
                         sh 'kubectl version'
                     }
                 }
+                
+        stage('Compile') {
+            steps {
+                echo '-=- compiling project -=-'
+                sh './mvnw compile'
+            }
+        }
+                
+        stage('Unit tests') {
+            steps {
+                echo '-=- execute unit tests -=-'
+                sh './mvnw test org.jacoco:jacoco-maven-plugin:report'
+                junit 'target/surefire-reports/*.xml'
+                jacoco execPattern: 'target/jacoco.exec'
+            }
+        }
+                
+        stage('Mutation tests') {
+            steps {
+                echo '-=- execute mutation tests -=-'
+                sh './mvnw org.pitest:pitest-maven:mutationCoverage'
+            }
+        }     
                 script {
                     qualityGates = readYaml file: 'quality-gates.yaml'
                 }
