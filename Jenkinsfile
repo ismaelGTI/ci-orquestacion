@@ -71,7 +71,7 @@ spec:
         EPHTEST_BASE_URL = "http://$EPHTEST_CONTAINER_NAME:$APP_LISTENING_PORT".concat("/$APP_CONTEXT_ROOT".replace('//', '/'))
 
         // credentials
-        KUBERNETES_CLUSTER_CRED_ID = 'rancher-desktop'
+        KUBERNETES_CLUSTER_CRED_ID = 'rancher-desktop-kubeconfig1.0'
         CONTAINER_REGISTRY_CRED = credentials("docker-hub-$IMAGE_ORG")
     }
 
