@@ -14,7 +14,7 @@ metadata:
 spec:
   containers:
     - name: jdk
-      image: docker.io/eclipse-temurin:20.0.1_9-jdk
+      image: docker.io/eclipse-temurin:21-jdk
       imagePullPolicy: Always
       command:
         - cat
@@ -87,7 +87,7 @@ spec:
                 sh './mvnw --version'
                 container('podman') {
                     sh 'podman --version'
-                    sh "podman login $CONTAINER_REGISTRY_URL -u $CONTAINER_REGISTRY_CRED_USR -p $CONTAINER_REGISTRY_CRED_PSW"
+                    sh "podman login $CONTAINER_REGISTRY_URL -u $CONTAINER_REGISTRY_CRED_USR -p $CONTAINER_REGISTRY_CRED_PSW --tls-verify=false"
                 }
                 container('kubectl') {
                     withKubeConfig([credentialsId: "$KUBERNETES_CLUSTER_CRED_ID"]) {
