@@ -64,6 +64,29 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+
+            <!-- Configurar PITest para pruebas de mutación -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.15.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <targetClasses>
+                        <param>com.example.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.example.*</param>
+                    </targetTests>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

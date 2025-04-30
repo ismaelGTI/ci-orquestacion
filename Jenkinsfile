@@ -105,14 +105,14 @@ spec:
                 jacoco execPattern: 'target/jacoco.exec'
             }
         }
-        /*
+        
         stage('Mutation tests') {
             steps {
                 echo '-=- execute mutation tests -=-'
                 sh './mvnw org.pitest:pitest-maven:mutationCoverage'
             }
         }
-        */
+        
         stage('Quality Gates') {
             steps {
                 script {

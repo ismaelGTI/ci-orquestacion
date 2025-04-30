@@ -1,11 +1,13 @@
 package com.example;
 
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class SimpleTest {
     @Test
-    public void testAlwaysTrue() {
-        assertTrue(true);
+    public void testAdd() {
+        Calculator calculator = new Calculator();
+        int result = calculator.add(2, 3);
+        assertEquals(5, result);
     }
 }
