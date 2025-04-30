@@ -87,6 +87,13 @@
                     </targetTests>
                 </configuration>
             </plugin>
+
+            <!-- Configurar el maven-jar-plugin para evitar problemas de certificados -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+            </plugin>
         </plugins>
     </build>
 </project>
