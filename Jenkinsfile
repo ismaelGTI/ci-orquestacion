@@ -94,9 +94,9 @@ spec:
                         sh 'kubectl version'
                     }
                 }
-            }    
-        }        
-                
+            }
+        }
+
         stage('Unit tests') {
             steps {
                 echo '-=- execute unit tests -=-'
@@ -105,18 +105,24 @@ spec:
                 jacoco execPattern: 'target/jacoco.exec'
             }
         }
-                
+
         stage('Mutation tests') {
             steps {
                 echo '-=- execute mutation tests -=-'
                 sh './mvnw org.pitest:pitest-maven:mutationCoverage'
             }
-        }     
+        }
+
+        stage('Quality Gates') {
+            steps {
                 script {
                     qualityGates = readYaml file: 'quality-gates.yaml'
+                    echo "Quality gates loaded: ${qualityGates}"
                 }
             }
-
+        }
+    }
+}
 
 def getPomVersion() {
     return readMavenPom().version
