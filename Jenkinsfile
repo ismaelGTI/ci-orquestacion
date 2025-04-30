@@ -94,13 +94,8 @@ spec:
                         sh 'kubectl version'
                     }
                 }
-                
-        stage('Compile') {
-            steps {
-                echo '-=- compiling project -=-'
-                sh './mvnw compile'
-            }
-        }
+            }    
+        }        
                 
         stage('Unit tests') {
             steps {
@@ -121,9 +116,7 @@ spec:
                     qualityGates = readYaml file: 'quality-gates.yaml'
                 }
             }
-        }
-    }
-}
+
 
 def getPomVersion() {
     return readMavenPom().version
