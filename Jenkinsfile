@@ -83,6 +83,7 @@ spec:
                 echo "the name for the epheremeral test container to be created is: $EPHTEST_CONTAINER_NAME"
                 echo "the base URL for the epheremeral test container is: $EPHTEST_BASE_URL"
                 sh 'java -version'
+                sh 'chmod +x ./mvnw'
                 sh './mvnw --version'
                 container('podman') {
                     sh 'podman --version'
