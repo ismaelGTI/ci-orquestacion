@@ -45,11 +45,11 @@ spec:
       image: jenkins/inbound-agent:latest
       args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
 
-volumes:
-  - name: m2-cache
-    hostPath:
-      path: /data/m2-cache
-      type: DirectoryOrCreate
+  volumes:
+    - name: m2-cache
+      hostPath:
+        path: /data/m2-cache
+        type: DirectoryOrCreate
 '''
         }
     }
