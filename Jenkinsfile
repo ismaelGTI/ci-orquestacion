@@ -14,12 +14,9 @@ metadata:
 spec:
   containers:
     - name: jdk
-      image: maven:3.9.6-eclipse-temurin-17
+      image: docker.io/eclipse-temurin:20.0.1_9-jdk
       imagePullPolicy: Always
       command:
-        - /bin/sh
-        - -c
-      args:
         - cat
       tty: true
       securityContext:
@@ -28,8 +25,6 @@ spec:
       volumeMounts:
         - name: m2-cache
           mountPath: /root/.m2
-        - name: workspace
-          mountPath: /home/jenkins/agent
     - name: podman
       image: quay.io/containers/podman:v4.5.1
       command:
@@ -50,11 +45,11 @@ spec:
       image: jenkins/inbound-agent:latest
       args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
 
-  volumes:
-    - name: m2-cache
-      emptyDir: {}
-    - name: workspace
-      emptyDir: {}
+volumes:
+  - name: m2-cache
+    hostPath:
+      path: /data/m2-cache
+      type: DirectoryOrCreate
 '''
         }
     }
@@ -87,15 +82,8 @@ spec:
                 echo "APP_NAME: ${APP_NAME}\nAPP_VERSION: ${APP_VERSION}"
                 echo "the name for the epheremeral test container to be created is: $EPHTEST_CONTAINER_NAME"
                 echo "the base URL for the epheremeral test container is: $EPHTEST_BASE_URL"
-                container('jdk') {
-                    sh 'ls -ld /root/.m2'  // Verifica si el volumen está montado correctamente
-                    sh 'df -h /root/.m2'   // Verifica el sistema de archivos montado
-                    sh 'echo "Testing shell"'
-                    sh 'which java'
-                    sh 'java -version'
-                    sh 'which mvn'
-                    sh './mvnw --version'
-                }
+                sh 'java -version'
+                sh './mvnw --version'
                 container('podman') {
                     sh 'podman --version'
                     sh "podman login $CONTAINER_REGISTRY_URL -u $CONTAINER_REGISTRY_CRED_USR -p $CONTAINER_REGISTRY_CRED_PSW"
