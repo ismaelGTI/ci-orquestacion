@@ -121,7 +121,27 @@ spec:
                 }
             }
         }
-    }
+
+        stage('Package') {
+            steps {
+                echo '-=- packaging project -=-'
+                sh './mvnw package -DskipTests'
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint:true
+            }
+        }
+
+        stage('Build & push container image') {
+            steps {
+                echo '-=- bulild & push container image -=-'
+                container('podman') {
+                    sh "podman build -t $IMAGE_SNAPSHOT ."
+                    sh "podman tag $IMAGE_SNAPSHOT $CONTAINER_REGISTRY_URL/$IMAGE_SNAPSHOT"
+                    sh "podman push $CONTAINER_REGISTRY_URL/$IMAGE_SNAPSHOT"
+                    sh "podman tag $IMAGE_SNAPSHOT $CONTAINER_REGISTRY_URL/$IMAGE_SNAPSHOT_LATEST"
+                    sh "podman push $CONTAINER_REGISTRY_URL/$IMAGE_SNAPSHOT_LATEST"
+                }
+              }
+          }
 }
 
 def getPomVersion() {
